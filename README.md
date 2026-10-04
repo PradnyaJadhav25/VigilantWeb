@@ -1,6 +1,6 @@
-# Qualis – Lighthouse CI
+# VigilantWeb – Lighthouse CI
 
-Qualis is a sample web application integrated with Lighthouse CI and GitHub Actions to automatically audit the application's quality on every code change.
+VigilantWeb is a sample web application integrated with Lighthouse CI and GitHub Actions to automatically audit the application's quality on every code change.
 
 The project demonstrates a CI pipeline that builds the web application, runs Lighthouse audits, measures Performance, Accessibility, Best Practices, and SEO, and uses configured thresholds as quality gates.
 
@@ -314,4 +314,4 @@ Thresholds checked
 
 ## Conclusion
 
-Qualis demonstrates the integration of Lighthouse CI with GitHub Actions for automated web application quality testing. The pipeline automatically builds and audits the application whenever relevant code changes are submitted. Lighthouse evaluates Performance, Accessibility, Best Practices, and SEO using configured minimum score thresholds. These thresholds act as quality gates that determine whether the CI pipeline passes or fails. This provides an automated approach to maintaining application quality throughout the development workflow.
+VigilantWeb demonstrates the integration of Lighthouse CI with GitHub Actions for automated web application quality testing. The pipeline automatically builds and audits the application whenever relevant code changes are submitted. Lighthouse evaluates Performance, Accessibility, Best Practices, and SEO using configured minimum score thresholds. These thresholds act as quality gates that determine whether the CI pipeline passes or fails. This provides an automated approach to maintaining application quality throughout the development workflow.
