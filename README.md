@@ -13,9 +13,12 @@ VigilantWeb/
 ├── public/
 │   ├── favicon.svg
 ├── src/
+│   ├── components/
+│   │   └── Charts.jsx
 │   ├── styles/
 │   │   └── dashboard.css
 │   ├── Dashboard.jsx
+│   ├── data.js
 │   ├── index.css
 │   └── index.jsx
 ├── .vigilantrc.json
@@ -28,6 +31,18 @@ VigilantWeb/
 ├── package.json
 └── vite.config.js
 ```
+
+## Dashboard features
+
+- **Status at a glance:** overall health derived from open incidents, with a live/pause toggle and manual refresh.
+- **Key metrics:** CPU, memory, p95 latency, requests per second and error rate, each with a sparkline and change over the selected range. Selecting a metric opens it in the main chart.
+- **Trend chart:** 15-minute, 1-hour or 6-hour range, hover readout, and incident markers along the time axis.
+- **Services:** per-service status, current latency and a 30-day uptime bar.
+- **Quality gate:** latest Lighthouse and bundle-size results compared with the thresholds read directly from `.vigilantrc.json` and the `size-limit` entries in `package.json`.
+- **Pipeline runs:** recent `audit-pipeline.yml` runs with commit, branch, duration and outcome.
+- **Incidents:** filter by severity, search, show or hide resolved items, acknowledge and resolve, and export the current view as CSV.
+
+Telemetry, incidents and pipeline runs are simulated in the browser for demonstration; no backend is required. The dashboard uses no charting library, so it stays well inside the bundle budget.
 
 ## Quality gates
 
