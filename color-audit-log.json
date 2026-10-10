@@ -1,0 +1,12 @@
+{
+  "status": "ready-for-audit",
+  "palette": {
+    "background": "#0d1117",
+    "card": "#161b22",
+    "accent": "#238636",
+    "text": "#e6edf3",
+    "muted": "#8b949e"
+  },
+  "minimumTextContrastRatio": 4.5,
+  "findings": []
+}

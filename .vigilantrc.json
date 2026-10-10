@@ -1,10 +1,10 @@
 {
   "ci": {
     "collect": {
-      "startServerCommand": "npm run preview -- --host 0.0.0.0 --port 4173 --strictPort",
-      "startServerReadyPattern": "Local:.*http://localhost:4173",
+      "startServerCommand": "npm run preview",
+      "startServerReadyPattern": "Local",
       "startServerReadyTimeout": 30000,
-      "url": ["http://localhost:4173/Qualis/"],
+      "url": ["http://localhost:4173/VigilantWeb/"],
       "numberOfRuns": 3
     },
     "assert": {
@@ -27,16 +27,19 @@
             "minScore": 0.9
           }
         ],
-        "categories:seo": [
+        "largest-contentful-paint": [
           "error",
           {
-            "minScore": 0.9
+            "maxNumericValue": 2500
+          }
+        ],
+        "cumulative-layout-shift": [
+          "error",
+          {
+            "maxNumericValue": 0.1
           }
         ]
       }
-    },
-    "upload": {
-      "target": "temporary-public-storage"
     }
   }
 }

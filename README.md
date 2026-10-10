@@ -1,317 +1,85 @@
-# VigilantWeb – Lighthouse CI
+# VigilantWeb – Automated Quality & Performance Gate
 
-VigilantWeb is a sample web application integrated with Lighthouse CI and GitHub Actions to automatically audit the application's quality on every code change.
+VigilantWeb is a React dashboard paired with an automated web quality pipeline. On every push and pull request targeting `main` or `dev`, GitHub Actions lints and builds the **System Metrics Dashboard**, enforces bundle-size budgets, and runs Lighthouse CI against its production preview. Performance, accessibility, best-practice, and Core Web Vitals assertions prevent regressions from passing the quality gate.
 
-The project demonstrates a CI pipeline that builds the web application, runs Lighthouse audits, measures Performance, Accessibility, Best Practices, and SEO, and uses configured thresholds as quality gates.
-
-## Project Objective
-
-The objective of this project is to:
-
-* Deploy a sample web application.
-* Integrate Lighthouse CI into a GitHub Actions workflow.
-* Automatically audit the application on code changes.
-* Measure Performance, Accessibility, Best Practices, and SEO.
-* Configure minimum score thresholds.
-* Pass or fail the CI pipeline based on Lighthouse audit results.
-
-## Technology Stack
-
-* React
-* Vite
-* JavaScript
-* CSS
-* GitHub
-* GitHub Actions
-* Lighthouse CI
-* GitHub Pages
-* Node.js
-
-## Project Structure
+## Project structure
 
 ```text
-Qualis/
+VigilantWeb/
 ├── .github/
 │   └── workflows/
-│       └── lighthouse.yml
+│       └── audit-pipeline.yml
+├── .gitignore
 ├── public/
+│   ├── favicon.svg
 ├── src/
-│   ├── App.jsx
-│   ├── App.css
-│   └── main.jsx
+│   ├── styles/
+│   │   └── dashboard.css
+│   ├── Dashboard.jsx
+│   ├── index.css
+│   └── index.jsx
+├── .vigilantrc.json
+├── a11y-thresholds.json
+├── color-audit-log.json
+├── eslint.config.js
 ├── index.html
-├── lighthouserc.json
-├── package.json
+├── README.md
 ├── package-lock.json
+├── package.json
 └── vite.config.js
 ```
 
-## Application Deployment
+## Quality gates
 
-The application is built using Vite and configured for deployment under the `/Qualis/` path.
+- **Performance:** Lighthouse Performance score must be at least 0.80; Largest Contentful Paint must be no more than 2,500 ms.
+- **Accessibility:** Lighthouse Accessibility score must be at least 0.90. The dashboard uses semantic sections and tables, named controls, visible focus states, and accessible progress indicators.
+- **Best Practices:** Lighthouse Best Practices score must be at least 0.90.
+- **Layout stability:** Cumulative Layout Shift must be no more than 0.1.
+- **Code quality:** ESLint checks JavaScript/JSX and HTMLHint checks the page markup before the production build.
+- **Bundle size:** `npm run check:size` enforces a 250 KB JavaScript and 50 KB CSS budget for generated assets.
 
-The Vite configuration uses:
+Lighthouse assertions and production-preview settings live in `.vigilantrc.json`. No public report upload is configured.
 
-```javascript
-base: "/Qualis/"
-```
+## Local development
 
-The production application can be deployed using GitHub Pages.
+### Prerequisites
 
-## Lighthouse CI Configuration
+- Node.js 20.x
+- npm
 
-Lighthouse CI is configured using `lighthouserc.json`.
-
-The application is first built and then served using the Vite preview server:
-
-```text
-npm run build
-        ↓
-Vite preview server
-        ↓
-Lighthouse CI
-```
-
-Lighthouse CI performs three audit runs:
-
-```json
-"numberOfRuns": 3
-```
-
-The configured Lighthouse quality thresholds are:
-
-| Category       | Minimum Score |
-| -------------- | ------------: |
-| Performance    |           80% |
-| Accessibility  |           90% |
-| Best Practices |           90% |
-| SEO            |           90% |
-
-The assertions use the `error` severity, which means that falling below a configured threshold causes the Lighthouse CI step to fail.
-
-## GitHub Actions Workflow
-
-The GitHub Actions workflow is located at:
-
-```text
-.github/workflows/lighthouse.yml
-```
-
-The workflow is triggered when changes are pushed to the `main` branch or when a pull request targets the `main` branch.
-
-The CI pipeline performs the following steps:
-
-```text
-Code Change
-     ↓
-Git Push / Pull Request
-     ↓
-GitHub Actions
-     ↓
-Checkout Repository
-     ↓
-Setup Node.js
-     ↓
-Install Dependencies
-     ↓
-Build Application
-     ↓
-Run Lighthouse CI
-     ↓
-Run Lighthouse Audits
-     ↓
-Check Quality Thresholds
-     ↓
-Pass / Fail
-```
-
-## GitHub Actions Workflow
-
-The workflow performs:
-
-1. Checkout of the repository.
-2. Node.js setup.
-3. Installation of project dependencies.
-4. Production build of the application.
-5. Execution of Lighthouse CI.
-
-The main Lighthouse command used by the workflow is:
-
-```bash
-npx @lhci/cli@0.15.x autorun
-```
-
-## Quality Gate
-
-The Lighthouse assertions act as a quality gate for the CI pipeline.
-
-For example, the configured rules require:
-
-```text
-Performance    >= 0.80
-Accessibility  >= 0.90
-Best Practices >= 0.90
-SEO            >= 0.90
-```
-
-If all required scores meet their thresholds:
-
-```text
-Lighthouse Assertions
-        ↓
-All requirements satisfied
-        ↓
-GitHub Actions
-        ↓
-SUCCESS
-```
-
-If any required score falls below its threshold:
-
-```text
-Lighthouse Assertions
-        ↓
-Threshold not satisfied
-        ↓
-GitHub Actions
-        ↓
-FAILURE
-```
-
-This ensures that changes that reduce the application's required quality levels can be detected automatically.
-
-## Running the Project Locally
-
-### 1. Clone the repository
-
-```bash
-git clone <repository-url>
-cd Qualis
-```
-
-### 2. Install dependencies
+### Install and run
 
 ```bash
 npm ci
-```
-
-### 3. Start the development server
-
-```bash
 npm run dev
 ```
 
-The application will be available through the Vite development server.
+Vite starts the development server and prints its local URL.
 
-### 4. Create a production build
+### Lint, build, and preview
 
 ```bash
+npm run lint
 npm run build
-```
-
-### 5. Preview the production build
-
-```bash
+npm run check:size
 npm run preview
 ```
 
-## Running Lighthouse CI Locally
+### Run the complete web audit
 
-After building the application, Lighthouse CI can be executed using:
+Build the app before starting Lighthouse CI:
 
 ```bash
-npx @lhci/cli@0.15.x autorun
+npm run build
+npm run audit:check
 ```
 
-Lighthouse CI starts the configured preview server, performs the configured number of Lighthouse runs, checks the assertions, and reports whether the configured quality requirements were satisfied.
+The audit runs three Lighthouse measurements against the built dashboard served at `/VigilantWeb/`, then evaluates the configured quality and Core Web Vitals assertions.
 
-## Lighthouse Report
+## Continuous integration
 
-The Lighthouse configuration uses:
+The `.github/workflows/audit-pipeline.yml` workflow runs on pushes and pull requests to `main` and `dev`. It uses Node.js 20.x and runs dependency installation, ESLint, the Vite production build, bundle-size checks, and Lighthouse CI in sequence. A failed lint rule, exceeded size budget, failed build, or unmet Lighthouse threshold fails the workflow.
 
-```json
-"upload": {
-  "target": "temporary-public-storage"
-}
-```
+## Dashboard
 
-After a successful Lighthouse CI run, the command provides a report URL containing the Lighthouse results.
-
-The report contains information about:
-
-* Performance
-* Accessibility
-* Best Practices
-* SEO
-* Individual Lighthouse audits
-
-The uploaded report uses temporary public storage and is not intended to be a permanent project archive.
-
-## CI Result
-
-A successful GitHub Actions execution indicates that:
-
-* The application builds successfully.
-* Lighthouse CI executes successfully.
-* The configured Lighthouse audits complete.
-* The required Lighthouse thresholds are satisfied.
-* The CI quality gate passes.
-
-A failed execution can indicate that the build failed or that one or more Lighthouse assertions did not satisfy their configured thresholds.
-
-## DevOps Concepts Demonstrated
-
-This project demonstrates the following DevOps concepts:
-
-### Continuous Integration
-
-Every push or pull request can automatically trigger the workflow, allowing the application to be validated without manually running the tests.
-
-### Automation
-
-The build and Lighthouse auditing processes are automated using GitHub Actions.
-
-### Quality Gates
-
-Lighthouse thresholds prevent the CI pipeline from passing when required quality scores fall below the configured limits.
-
-### Continuous Quality Monitoring
-
-The application is automatically evaluated for Performance, Accessibility, Best Practices, and SEO after code changes.
-
-### Feedback
-
-The GitHub Actions result provides immediate feedback about whether the latest code satisfies the configured quality requirements.
-
-## Expected Outcome
-
-The completed pipeline provides an automated process:
-
-```text
-Developer makes a change
-          ↓
-Changes pushed to GitHub
-          ↓
-GitHub Actions starts
-          ↓
-Dependencies installed
-          ↓
-Application built
-          ↓
-Lighthouse CI runs
-          ↓
-Performance / Accessibility /
-Best Practices / SEO measured
-          ↓
-Thresholds checked
-          ↓
-      ┌───────────────┐
-      │               │
-   PASS            FAIL
-      │               │
- CI succeeds      CI fails
-```
-
-## Conclusion
-
-VigilantWeb demonstrates the integration of Lighthouse CI with GitHub Actions for automated web application quality testing. The pipeline automatically builds and audits the application whenever relevant code changes are submitted. Lighthouse evaluates Performance, Accessibility, Best Practices, and SEO using configured minimum score thresholds. These thresholds act as quality gates that determine whether the CI pipeline passes or fails. This provides an automated approach to maintaining application quality throughout the development workflow.
+The System Metrics Dashboard shows API Gateway health and response time, CPU and memory utilization, online worker nodes, and a recent incident log. The telemetry refresh button simulates updated CPU and memory measurements; the alert filter toggles the incident list. The displayed timestamp updates continuously.

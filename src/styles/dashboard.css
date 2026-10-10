@@ -1,0 +1,427 @@
+:root {
+  --bg-primary: #0d1117;
+  --accent: #238636;
+  --card-bg: #161b22;
+  --border: #30363d;
+  --text-primary: #e6edf3;
+  --text-muted: #8b949e;
+  --danger: #f85149;
+  --warning: #d29922;
+}
+
+.vw-dashboard {
+  min-height: 100vh;
+  padding: 56px 24px 32px;
+  background:
+    radial-gradient(ellipse at 50% -20%, rgba(35, 134, 54, 0.14), transparent 48%),
+    var(--bg-primary);
+}
+
+.vw-dashboard-shell {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+}
+
+.vw-dashboard-header,
+.vw-dashboard-section-heading,
+.vw-dashboard-card-heading,
+.vw-dashboard-usage-heading,
+.vw-dashboard-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.vw-dashboard-header {
+  margin-bottom: 36px;
+}
+
+.vw-dashboard-kicker,
+.vw-dashboard-label {
+  margin: 0 0 10px;
+  color: var(--text-muted);
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+.vw-dashboard-header h1 {
+  margin: 0;
+  font-size: clamp(25px, 4vw, 34px);
+  letter-spacing: -0.04em;
+}
+
+.vw-dashboard-subtitle {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.vw-dashboard-header-meta {
+  display: grid;
+  justify-items: end;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.vw-dashboard-live,
+.vw-dashboard-state,
+.vw-dashboard-node-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(35, 134, 54, 0.45);
+  border-radius: 999px;
+  background: rgba(35, 134, 54, 0.12);
+  color: #3fb950;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.vw-dashboard-live {
+  padding: 8px 12px;
+}
+
+.vw-dashboard-status-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #3fb950;
+  box-shadow: 0 0 10px rgba(63, 185, 80, 0.8);
+}
+
+.vw-dashboard-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.vw-dashboard-card,
+.vw-dashboard-incidents {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card-bg);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.14);
+}
+
+.vw-dashboard-card {
+  min-height: 230px;
+  padding: 22px;
+}
+
+.vw-dashboard-card-heading {
+  align-items: flex-start;
+}
+
+.vw-dashboard-card h2,
+.vw-dashboard-section-heading h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.vw-dashboard-card-icon {
+  color: #58a6ff;
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.vw-dashboard-state {
+  padding: 6px 9px;
+  white-space: nowrap;
+}
+
+.vw-dashboard-metric-value {
+  margin: 26px 0 2px;
+  font-size: 46px;
+  font-weight: 600;
+  letter-spacing: -0.06em;
+}
+
+.vw-dashboard-metric-value span {
+  margin-left: 5px;
+  color: var(--text-muted);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.vw-dashboard-muted {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.vw-dashboard-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 25px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.vw-dashboard-usage {
+  margin-top: 22px;
+}
+
+.vw-dashboard-usage-heading {
+  margin-bottom: 9px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.vw-dashboard-usage-heading strong {
+  color: var(--text-primary);
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.vw-dashboard-usage progress {
+  display: block;
+  width: 100%;
+  height: 7px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 10px;
+  background: #30363d;
+  accent-color: var(--accent);
+}
+
+.vw-dashboard-usage progress::-webkit-progress-bar {
+  border-radius: 10px;
+  background: #30363d;
+}
+
+.vw-dashboard-usage progress::-webkit-progress-value {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #238636, #3fb950);
+}
+
+.vw-dashboard-usage progress::-moz-progress-bar {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #238636, #3fb950);
+}
+
+.vw-dashboard-node-count {
+  margin: 22px 0 6px;
+  font-size: 46px;
+  font-weight: 600;
+  letter-spacing: -0.06em;
+}
+
+.vw-dashboard-node-badge {
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+.vw-dashboard-node-badge + .vw-dashboard-muted {
+  margin-top: 14px;
+}
+
+.vw-dashboard-incidents {
+  margin-top: 22px;
+  padding: 24px;
+}
+
+.vw-dashboard-section-heading {
+  align-items: flex-end;
+}
+
+.vw-dashboard-section-heading h2 {
+  font-size: 20px;
+}
+
+.vw-dashboard-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.vw-dashboard-button {
+  min-height: 38px;
+  padding: 0 13px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.vw-dashboard-button:focus-visible {
+  outline: 2px solid #58a6ff;
+  outline-offset: 2px;
+}
+
+.vw-dashboard-button-secondary {
+  background: #21262d;
+  color: var(--text-primary);
+}
+
+.vw-dashboard-button-secondary:hover {
+  border-color: #8b949e;
+  background: #30363d;
+}
+
+.vw-dashboard-button-primary {
+  border-color: #238636;
+  background: #238636;
+  color: #fff;
+}
+
+.vw-dashboard-button-primary:hover {
+  background: #2ea043;
+}
+
+.vw-dashboard-refresh-note {
+  min-height: 16px;
+  margin: 15px 0 8px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.vw-dashboard-table-wrap {
+  overflow-x: auto;
+}
+
+.vw-dashboard-incidents table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 12px;
+}
+
+.vw-dashboard-incidents th {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.vw-dashboard-incidents td {
+  padding: 15px 10px;
+  border-bottom: 1px solid rgba(48, 54, 61, 0.7);
+  color: #b1bac4;
+}
+
+.vw-dashboard-incidents tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.vw-dashboard-incidents .vw-dashboard-service {
+  color: var(--text-primary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.vw-dashboard-severity {
+  display: inline-block;
+  padding: 5px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.vw-dashboard-severity-warning {
+  background: rgba(210, 153, 34, 0.15);
+  color: #e3b341;
+}
+
+.vw-dashboard-severity-info {
+  background: rgba(88, 166, 255, 0.14);
+  color: #79c0ff;
+}
+
+.vw-dashboard-severity-critical {
+  background: rgba(248, 81, 73, 0.14);
+  color: #ff7b72;
+}
+
+.vw-dashboard-empty {
+  padding: 28px 10px !important;
+  color: var(--text-muted) !important;
+  text-align: center;
+}
+
+.vw-dashboard-footer {
+  margin-top: 20px;
+  color: #6e7681;
+  font-size: 11px;
+}
+
+.vw-dashboard-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@media (max-width: 820px) {
+  .vw-dashboard-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vw-dashboard-card:last-child {
+    grid-column: 1 / -1;
+    min-height: 190px;
+  }
+}
+
+@media (max-width: 600px) {
+  .vw-dashboard {
+    padding: 32px 16px 24px;
+  }
+
+  .vw-dashboard-header,
+  .vw-dashboard-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .vw-dashboard-header-meta {
+    justify-items: start;
+  }
+
+  .vw-dashboard-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .vw-dashboard-card:last-child {
+    grid-column: auto;
+  }
+
+  .vw-dashboard-incidents {
+    padding: 18px 14px;
+  }
+
+  .vw-dashboard-actions {
+    width: 100%;
+  }
+
+  .vw-dashboard-button {
+    flex: 1;
+  }
+
+  .vw-dashboard-incidents table {
+    min-width: 620px;
+  }
+
+  .vw-dashboard-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+}

@@ -1,15 +1,17 @@
-name: Qualis Lighthouse CI
+name: VigilantWeb Automated Quality Gate
 
 on:
   push:
     branches:
       - main
+      - dev
   pull_request:
     branches:
       - main
+      - dev
 
 jobs:
-  lighthouse:
+  quality-gate:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,14 +21,20 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 20.x
           cache: npm
 
       - name: Install dependencies
         run: npm ci
 
+      - name: Run code quality checks
+        run: npm run lint
+
       - name: Build application
         run: npm run build
 
-      - name: Run Lighthouse CI
-        run: npx @lhci/cli@0.15.x autorun
+      - name: Evaluate Performance Gates
+        run: npm run check:size
+
+      - name: Execute Web Quality Inspection
+        run: npm run audit:check

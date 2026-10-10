@@ -1,0 +1,5 @@
+{
+  "lighthouseCategory": "accessibility",
+  "minimumScore": 0.9,
+  "severity": "error"
+}
